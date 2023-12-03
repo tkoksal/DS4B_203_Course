@@ -1,0 +1,110 @@
+---
+title: "Data Overview"
+output: 
+    html_notebook:
+        theme: united
+        highlight: tango
+        toc: true
+        toc_float: true
+---
+
+# Libraries
+```{r}
+library(tidyverse)
+```
+
+
+# Data
+
+## Establish Relationships 
+
+- Website traffic (Page Views, Sessions, Organic Traffic)
+- Top 20 Pages
+
+### Google Analytics - Summary Hourly
+
+```{r}
+# Google Analytics - Summary Hourly
+read_rds("00_data/google_analytics_summary_hourly.rds")
+```
+
+- **Page Views**: Total Number of Pages viewed. Repeated views are counted. Spikes when promoted.
+- **Organic Views**: Total Number of Pages viewed from people using unpaid search (i.e. Google search). Never spikes when promoted since this traffic is directed
+- **Sessions**: A single session may have one or more pages viewed within a time frame. It can contain multiple page views but will only increment after a period of time has elapsed. Spikes when promoted.
+
+### Google Analytics - Top 20 pages, Daily
+
+```{r}
+# Google Analytics - Top 20 pages, Daily
+read_rds("00_data/google_analytics_by_page_daily.rds")
+```
+
+**`pagePath`**: Indicates the specific page that accumulated views. Can be from the domain (www.business-science.io) or one of the sub-domains (e.g. university.business-science.io). 
+
+**`rank`**: Ranking based on the total Page Views. Gives us a rough idea of which pages get a lot of traffic, and therefore are most important to the business.
+
+**Blog Articles**: Page Path contains `/category/date-of-publication/article-description`
+
+**Course Landing Pages**: Page path contains `/p/course_desription`
+
+## Build Relationships 
+
+- Collect emails
+- Host Events
+
+### Mailchimp Data
+
+```{r}
+# Mailchimp Data
+read_rds("00_data/mailchimp_users.rds")
+```
+
+**Database Exports**: Often you get data that is not a tidy time series. This one is at the user-level. It will need to be prepared before we can analyze it.
+
+**Time-Based Aggregations**: We will typically summarise the data by an aggregation over time:
+
+- Frequency(Counts)
+- Sum
+- Average
+
+### Learning Labs
+
+```{r}
+# Learning Labs
+read_rds("00_data/learning_labs.rds")
+```
+
+## Generate Course Revenue
+
+- Revenue data (aggregated at weekly interval)
+- Product Events
+
+### Transactions Weekly
+
+```{r}
+# Transactions Weekly
+read_rds("00_data/transactions_weekly.rds")
+```
+
+**Sales Revenue**: A key measure of performance that businesses need to forecast.
+
+**Revenue Over Time**: Often the sales forecast is used in planning.
+
+- How many people should we hire?
+- Can we make an investment this quarter?
+
+These questions are all based on a sales forecast.
+
+**Revenue Aggregation**
+
+Most databases don't have the revenue aggregated. Like the Mailchimp data, you will need to summarize the data by time.
+
+### Product Events
+
+```{r}
+# Product Events
+read_rds("00_data/product_events.rds")
+```
+
+
+
